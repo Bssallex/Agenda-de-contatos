@@ -16,8 +16,8 @@ function adicionarContato() {
         telefone: telefone
     }
 
-    if (nome === "" && telefone === "") {
-        alert("Adicione um contato");
+    if (nome === "" || telefone === "") {
+        alert("Adicione um nome e telefone");
     } else if (contatos.some(c => c.nome === nome)) {
         alert("Esse nome já existe nos registros");
         document.getElementById('nome').value = "";
