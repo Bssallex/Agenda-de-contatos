@@ -1,22 +1,15 @@
-/*
-1. Gerenciador de Contatos Simples
-
-Crie um sistema no console para CADASTRAR, LISTAR e REMOVER contatos.
-
-Requisitos: Um array de objetos contatos[]. 
-Cada contato tem: const contatos = nome: "telefone".
-
-Funções:
-adicionarContato() = OK
-listarContatos() = OK
-removerContato() = OK
-*/
-
 const contatos = [];
+
+function formatarNumero(telefone) {
+    telefone = telefone.replace(/\D/g, "");
+    return telefone.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+}
 
 function adicionarContato() {
     let nome = document.getElementById('nome').value;
     let telefone = document.getElementById('telefone').value;
+
+    telefone = formatarNumero(telefone);
 
     const contato = {
         nome: nome,
@@ -25,8 +18,18 @@ function adicionarContato() {
 
     if (nome === "" && telefone === "") {
         alert("Adicione um contato");
+    } else if (contatos.some(c => c.nome === nome)) {
+        alert("Esse nome já existe nos registros");
+        document.getElementById('nome').value = "";
+        return;
     } else if (contatos.some(c => c.telefone === telefone)) {
         alert("Esse número já existe nos registros");
+        document.getElementById('telefone').value = "";
+        return;
+    } else if (telefone.length < 14) {
+        alert("Número de telefone inválido. 11 dígitos são necessários.");
+        document.getElementById('telefone').value = "";
+        return;
     } else {
         contatos.push(contato);
     }
@@ -71,3 +74,4 @@ function removerContato() {
     listarContatos();
     document.getElementById('nomeRemover').value = "";
 }
+
